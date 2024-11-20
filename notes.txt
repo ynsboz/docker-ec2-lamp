@@ -1,0 +1,48 @@
+Make the scripts executable:
+> chmod +x start.sh stop.sh
+
+Amazon Linux 2023 uses the dnf package manager (a newer version of yum)
+AL2023 > dnf repolist
+
+View package info
+AL2023 > sudo dnf info package_name
+
+Apache commands
+Start the Apache web server.
+AL2023 > sudo systemctl start httpd
+Use the systemctl command to configure the Apache web server to start at each system boot.
+AL2023 > sudo systemctl enable httpd
+You can verify that httpd is on by running the following command:
+AL2023 > sudo systemctl is-enabled httpd
+
+Docker commands
+docker images -a
+docker image rm edcdcba848f7
+docker-compose down
+docker-compse up --build -d
+docker build -t amazonlinux-lamp
+docker run -d \
+    --name amazonlinux-lamp \
+    --memory 512m \
+    --cpus 2 \
+    -v lamp_data:/var/www/html \
+    -p 22:22 -p 80:80 -p 443:443 \
+    <image_id>
+dokcer run -it amazonlinux-lamp
+
+Git
+1. Create ssh key pair
+    ssh-keygen -t rsa -b 4096 -C "EMAIL_ADDRESS" -f ~/.ssh/github_rsa
+    ssh-add ~/.ssh/github_rsa
+    ssh -T git@github.com
+    nano ~/.ssh/known_hosts
+2. Upload public key to Github settings
+3. Create repo in github
+4. Push local git to remote
+    echo "# docker-ec2-lamp" >> README.md
+    git init
+    git add README.md
+    git commit -m "first commit"
+    git branch -M main
+    git remote add origin git@github.com:bozsudo/docker-ec2-lamp.git
+    git push -u origin main

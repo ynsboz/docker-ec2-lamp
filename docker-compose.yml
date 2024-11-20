@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  lamp:
+    image: amazonlinux:2023
+    container_name: amazonlinux-lamp
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "22:22"   # SSH ssh root@localhost -p 22
+      - "80:80"   # HTTP
+      - "443:443" # HTTPS
+    volumes:
+      - lamp_data:/var/www/html
+    environment:
+      - TZ=UTC # Set timezone if needed
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+          cpus: "2.0"
+    command: ["/bin/bash"]
+
+volumes:
+  lamp_data:
+    driver: local
